@@ -38,7 +38,6 @@ def transcribe_audio(audio_file_path):
                 language="es"
             )
         transcription = response.text
-        print(f"✅ Transcripción: {transcription}")
         return transcription
     except Exception as e:
         print(f"Error al transcribir el audio: {e}")
@@ -54,7 +53,6 @@ def get_chatgpt_response(prompt):
             max_tokens=150
         )
         answer = response.choices[0].message.content.strip()
-        print(f"✅ Respuesta de ChatGPT: {answer}")
         return answer
     except Exception as e:
         print(f"Error al obtener respuesta de ChatGPT: {e}")
@@ -71,7 +69,6 @@ def convert_text_to_speech(text, voice="onyx"):
         )
         audio_file_path = '/tmp/temp_audio.mp3'
         response.stream_to_file(audio_file_path)
-        print(f"✅ Audio guardado en: {audio_file_path}")
         return audio_file_path
     except Exception as e:
         print(f"Error al convertir texto a voz: {e}")
