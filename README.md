@@ -4,4 +4,4 @@ The ReSpeaker Mic Array V2 audio capture device was used to build this system, w
 The development is written in Python and uses Picovoice's Porcupine keyword recognition engine along with OpenAI services to operate.
 
 
-This project is solely for educational and research purposes. For any commercial use, it's a good idea to review the licenses for the technologies used or replace them with open-source ones.
+## This project is solely for educational and research purposes. For any commercial use, it's a good idea to review the licenses for the technologies used, specifically for Porcupine you will need a commercial license , or replace them with open-source ones.
