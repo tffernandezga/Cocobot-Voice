@@ -31,6 +31,7 @@ def initialize_audio_stream(respeaker_index=5):
 #Función para procesar los datos de audio
 #Extraemos los datos del canal 0 de los 6 canales
 #Poner los datos en la cola de forma segura
+#Leer datos del stream
 def process_audio_data(stream, frame_queue, chunk_size=CHUNK):
     data = stream.read(chunk_size)  #Leer datos del stream
     a = np.frombuffer(data, dtype=np.int16)[0::6] 
