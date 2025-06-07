@@ -1,5 +1,6 @@
-# Cocobot Installation and User Manual (ReSpeaker Mic Array v2.0)
-
+# Cocobot Installation Manual (ReSpeaker Mic Array v2.0)
+**Note:** Cocobot is specifically configured to work with the ReSpeaker Mic Array v2.0.  
+If you wish to use a different microphone device, you will need to manually update the audio input configuration
 ## 1. System Preparation
 
 Make sure your Linux system is up to date and has internet access:
@@ -92,15 +93,68 @@ sudo usermod -aG plugdev $USER
 
 Then, reboot or reconnect the ReSpeaker.
 
-## 8. Final Step
+## 8. Configure ReSpeaker Device Index
 
-Reboot your system or replug the ReSpeaker and verify:
+Follow these steps to identify the ReSpeaker Mic Array input device index:
+
+### Step 1: Install PyAudio (if not already)
 
 ```bash
-lsusb
+sudo pip install pyaudio
 ```
 
-You’re ready to run Cocobot!
+### Step 2: Create the script to get device index
+
+```bash
+cd ~
+nano get_index.py
+```
+
+Paste the following code into `get_index.py`:
+
+```python
+import pyaudio
+
+p = pyaudio.PyAudio()
+info = p.get_host_api_info_by_index(0)
+numdevices = info.get('deviceCount')
+
+for i in range(0, numdevices):
+    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+```
+
+### Step 3: Save and close the file
+
+Press `Ctrl + X`, then `Y` to save and exit.
+
+### Step 4: Run the script
+
+```bash
+sudo python get_index.py
+```
+
+Expected output:
+
+```
+Input Device id  2  -  ReSpeaker 4 Mic Array (UAC1.0): USB Audio (hw:1,0)
+```
+
+### Step 5: Use the correct index in your code
+
+Update your script to set `RESPEAKER_INDEX` based on the detected ID:
+
+```python
+import pyaudio
+import wave
+
+RESPEAKER_RATE = 16000
+RESPEAKER_CHANNELS = 6  # 1 for 1_channel_firmware.bin or 6 for 6_channels_firmware.bin
+RESPEAKER_WIDTH = 2
+RESPEAKER_INDEX = 2  # Use the index number you got from get_index.py
+```
+
+You can now run your recording script to test audio capture.
 
 ## 9. Running Cocobot
 
@@ -110,4 +164,5 @@ To start Cocobot, use the following command:
 python3 cocobotVoice.py {number_of_silences}
 ```
 
-Replace `{number_of_silences}` with the number of consecutive silence detections you want before stopping the recording (e.g., `20`).
+Replace `{number_of_silences}` with the number of consecutive silence detections before stopping the recording (e.g., `20`).
+
