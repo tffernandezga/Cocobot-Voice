@@ -27,6 +27,7 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 #Función que filtra los audios vacíos
+#Considera como válidos solo los segmentos que superen el valor -35dBFS
 def contiene_voz(ruta_audio, min_duracion_ms=300, silence_thresh=-35):
     audio = AudioSegment.from_file(ruta_audio, format="wav")
     no_silencios = detect_nonsilent(audio, min_silence_len=200, silence_thresh=silence_thresh)
@@ -118,7 +119,7 @@ def main():
                 silence_count = 0  #Contador de silencios consecutivos
                 start_time = time.time()
 
-                max_duration = 20  # Duración máxima de grabación en segundos
+                max_duration = 20  #Duración máxima de grabación en segundos
                 start_recording_time = time.time()
 
                 while True:  #Continuar grabando mientras se detecte voz
@@ -131,12 +132,14 @@ def main():
                         silence_count += 1
                     else:
                         silence_count = 0  #Restablecer el contador si se detecta voz
-
-                    if silence_count >= max_silencios:  # Si se detectaron loa silencios consecutivos máximos se para la grabación
+                        
+                    #Si se detectaron loa silencios consecutivos máximos se para la grabación
+                    if silence_count >= max_silencios:  
                         print("🛑 20 silencios consecutivos detectados. Deteniendo la grabación...")
                         break
-
-                    if time.time() - start_recording_time >= max_duration: #Si la grabación dura más de 20 segundos se para
+                        
+                    #Si la grabación dura más de 20 segundos se para
+                    if time.time() - start_recording_time >= max_duration: 
                         print("⏱️ Tiempo máximo de grabación alcanzado. Deteniendo...")
                         break
 
