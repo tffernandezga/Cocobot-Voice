@@ -101,3 +101,13 @@ lsusb
 ```
 
 You’re ready to run Cocobot!
+
+## 9. Running Cocobot
+
+To start Cocobot, use the following command:
+
+```bash
+python3 cocobotVoice.py {number_of_silences}
+```
+
+Replace `{number_of_silences}` with the number of consecutive silence detections you want before stopping the recording (e.g., `20`).
