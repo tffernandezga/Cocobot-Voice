@@ -1,4 +1,4 @@
-# Cocobot Installation Manual (ReSpeaker Mic Array v2.0)
+# Cocobot Installation and User Manual (ReSpeaker Mic Array v2.0)
 
 ## 1. System Preparation
 
