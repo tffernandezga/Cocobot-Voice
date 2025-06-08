@@ -30,7 +30,6 @@ mensaje_sistema = {
 #Función para transcribir de voz a texto mediante la API
 def transcribe_audio(audio_file_path):
     try:
-        print("⏳ Enviando audio a la API de OpenAI para transcripción...")
         with open(audio_file_path, 'rb') as audio_file:
             response = client.audio.transcriptions.create(
                 model="whisper-1",
@@ -46,7 +45,6 @@ def transcribe_audio(audio_file_path):
 #Función para generar una respuesta mediante la API
 def get_chatgpt_response(prompt):
     try:
-        print("⏳ Obteniendo respuesta de ChatGPT...")
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[mensaje_sistema, {"role": "user", "content": prompt}],
@@ -61,7 +59,6 @@ def get_chatgpt_response(prompt):
 #Función que convierte la respuesta en audio mediante la API
 def convert_text_to_speech(text, voice="onyx"):
     try:
-        print("⏳ Convirtiendo texto a voz...")
         response = client.audio.speech.create(
             model="gpt-4o-mini-tts",
             voice=voice,
