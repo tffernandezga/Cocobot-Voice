@@ -33,7 +33,7 @@ def transcribe_audio(audio_file_path):
         print("⏳ Enviando audio a la API de OpenAI para transcripción...")
         with open(audio_file_path, 'rb') as audio_file:
             response = client.audio.transcriptions.create(
-                model="gpt-4o-transcribe",
+                model="whsiper-1",
                 file=audio_file,
                 language="es"
             )
